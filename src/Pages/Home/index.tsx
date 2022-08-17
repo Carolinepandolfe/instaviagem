@@ -48,13 +48,16 @@ const Home = () => {
 	}
 	const lowercaseSearch = search.toLowerCase()
 
-	const handleInputSearch = filterByActive.filter(
-		(data) =>
-			data.name.toLowerCase().includes(lowercaseSearch) ||
-			data.type.toLowerCase().includes(lowercaseSearch) ||
-			data.about.toLowerCase().includes(lowercaseSearch) ||
-			data.address.toLowerCase().includes(lowercaseSearch)
-	)
+	const handleInputSearch = filterByActive.filter((data) => {
+		const name = data.name.toLowerCase()
+		const type = data.type.toLowerCase()
+		const about = data.about.toLowerCase()
+		const address = data.address.toLowerCase()
+
+		return [name, type, about, address].some((value) =>
+			value.includes(lowercaseSearch)
+		)
+	})
 
 	return (
 		<>
