@@ -3,17 +3,20 @@ import * as Styled from './styles'
 
 type CardProps = {
 	image: string
+	name: string
+	price: number
 }
 
-const Card = ({ image }: CardProps) => {
+const Card = ({ image, name, price }: CardProps) => {
 	return (
 		<Styled.Card>
 			<img src={image} alt="" />
 			<Styled.Overlay>
 				<Styled.Content>
-					<Styled.Name>Rio de Janeiro</Styled.Name>
+					<Styled.Name>{name}</Styled.Name>
 					<Styled.Price>
-						<span>R$</span>186
+						<span>R$</span>
+						{price}
 					</Styled.Price>
 					<Button>Ver mais</Button>
 				</Styled.Content>

@@ -65,7 +65,12 @@ const Home = () => {
 			<Styled.Container>
 				<Search value={search} onChange={handleChangeSearch} />
 				{handleInputSearch.map((card) => (
-					<Card image={card?.image} key={card?._id} />
+					<Card
+						key={card?._id}
+						image={card?.image}
+						name={card.name}
+						price={card.price}
+					/>
 				))}
 			</Styled.Container>
 		</>
