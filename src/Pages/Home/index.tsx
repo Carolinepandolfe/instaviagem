@@ -27,35 +27,34 @@ const Home = () => {
 	const URL =
 		'https://us-central1-rapid-api-321400.cloudfunctions.net/instaviagem-challenge'
 
-	const getData = async () => {
-		try {
-			const response = await axios.get(URL)
-			setData(response?.data)
-		} catch (err) {
-			console.log(err)
-		}
-	}
-
 	useEffect(() => {
+		const getData = async () => {
+			try {
+				const response = await axios?.get(URL)
+				setData(response?.data)
+				console.log(response.data)
+			} catch (err) {
+				console.log(err)
+			}
+		}
 		getData()
+		console.log(data)
 	}, [])
 
-	const filterByActive = data.filter((card) => card.isActive === true)
+	const filterByActive = data?.filter((card) => card.isActive === true)
 
 	const handleChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
 		setSearch(e.target.value)
 	}
+	const lowercaseSearch = search.toLowerCase()
 
-	const handleInputSearch = useMemo(() => {
-		const lowercaseSearch = search.toLowerCase()
-		return filterByActive.filter(
-			(data) =>
-				data.name.toLowerCase().includes(lowercaseSearch) ||
-				data.type.toLowerCase().includes(lowercaseSearch) ||
-				data.about.toLowerCase().includes(lowercaseSearch) ||
-				data.address.toLowerCase().includes(lowercaseSearch)
-		)
-	}, [search])
+	const handleInputSearch = filterByActive.filter(
+		(data) =>
+			data.name.toLowerCase().includes(lowercaseSearch) ||
+			data.type.toLowerCase().includes(lowercaseSearch) ||
+			data.about.toLowerCase().includes(lowercaseSearch) ||
+			data.address.toLowerCase().includes(lowercaseSearch)
+	)
 
 	return (
 		<>
@@ -63,7 +62,7 @@ const Home = () => {
 			<Styled.Container>
 				<Search value={search} onChange={handleChangeSearch} />
 				{handleInputSearch.map((card) => (
-					<Card image={card.image} key={card._id} />
+					<Card image={card?.image} key={card?._id} />
 				))}
 			</Styled.Container>
 		</>
