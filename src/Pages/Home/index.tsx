@@ -5,8 +5,9 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Search from 'components/Search'
 import Filter from 'components/Filter'
+import LoadingOverlay from 'components/LoadingOverlay'
 
-type DataProps = {
+export type DataProps = {
 	_id: string
 	about: string
 	address: string
@@ -24,9 +25,10 @@ type DataProps = {
 const Home = () => {
 	const [data, setData] = useState<DataProps[]>([])
 	const [search, setSearch] = useState('')
-	const [select, setSelect] = useState('')
+	const [select, setSelect] = useState('all')
 
 	const labelButtons = [
+		{ label: 'Todos', type: 'all' },
 		{ label: 'Hospedagem', type: 'hotel' },
 		{ label: 'Transporte', type: 'transport' },
 		{ label: 'Atração', type: 'attraction' },
@@ -40,13 +42,11 @@ const Home = () => {
 			try {
 				const response = await axios?.get(URL)
 				setData(response?.data)
-				console.log(response.data)
 			} catch (err) {
 				console.log(err)
 			}
 		}
 		getData()
-		console.log(data)
 	}, [])
 
 	const filterByActive = data?.filter((card) => card.isActive === true)
@@ -73,7 +73,7 @@ const Home = () => {
 	)
 
 	const filterByCategory = orderByName.filter((category) =>
-		!category ? category : category?.type.includes(select)
+		select === 'all' ? category : category?.type.includes(select)
 	)
 
 	return (
@@ -84,6 +84,7 @@ const Home = () => {
 				<Styled.FilterWrapper>
 					{labelButtons.map(({ label, type }) => (
 						<Filter
+							key={label}
 							label={type}
 							active={select}
 							onClick={handleChangeFilter(type)}
@@ -92,16 +93,17 @@ const Home = () => {
 						</Filter>
 					))}
 				</Styled.FilterWrapper>
-				<Styled.Content>
-					{filterByCategory.map((card) => (
-						<Card
-							key={card?._id}
-							image={card?.image}
-							name={card.name}
-							price={card.price}
-						/>
-					))}
-				</Styled.Content>
+				{data?.length <= 0 ? (
+					<LoadingOverlay />
+				) : (
+					<>
+						<Styled.Content>
+							{filterByCategory.map((card) => (
+								<Card key={card?._id} {...card} />
+							))}
+						</Styled.Content>
+					</>
+				)}
 			</Styled.Container>
 		</>
 	)
