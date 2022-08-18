@@ -4,6 +4,9 @@ export const InputContainer = styled.div`
 	position: relative;
 	display: flex;
 	align-items: center;
+	justify-content: center;
+	width: clamp(292px, 100%, 600px);
+	margin: 0 auto;
 `
 
 export const Input = styled.input`
