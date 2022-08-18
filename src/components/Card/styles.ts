@@ -77,7 +77,7 @@ export const ModalContainer = styled.main`
 		border-radius: 0.625rem;
 		display: flex;
 		flex-direction: column;
-		height: 25rem;
+		height: auto;
 		padding: 26px;
 		position: relative;
 		width: clamp(300px, 100%, 730px);
@@ -85,20 +85,13 @@ export const ModalContainer = styled.main`
 
 	@media (min-width: 600px) {
 		height: 340px;
-		width: 510px;
-	}
-
-	@media (min-width: 768px) {
-		height: 370px;
 	}
 
 	@media (min-width: 1024px) {
-		height: 392px;
 		width: 610px;
 	}
 
 	@media (min-width: 1440px) {
-		height: 461px;
 		width: 730px;
 	}
 `
